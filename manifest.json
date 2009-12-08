@@ -1,0 +1,19 @@
+{
+    "name"            : "Chromacs",
+    "version"         : "0.0.1",
+    "description"     : "Adds Emacs-like key bindings",
+    "icons"           : {
+        "128": "icon128.png",
+        "48" : "icon48.png"
+    },
+    "content_scripts" : [{
+        "js"      : [ "chromacs.js" ],
+        "run_at"  : "document_start",
+        "matches" : [ "http://*/*", "https://*/*" ]
+    }],
+    "permissions"     : [ "tabs" ]
+}
+
+
+
+
