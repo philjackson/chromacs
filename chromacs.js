@@ -18,15 +18,14 @@ var body_bindings = {
 
 var text_area_bindings = { };
 
-var current_binding,
-    current_prefix  = null;
+var current_binding, current_prefix;
 
 function key_press( e ) {
     var key         = get_key( e ),
         target_type = e.target.tagName.toLowerCase();
 
     // behaviour obviously affected by input type
-    current_binding = ( target_type == 'input' || target_type == 'textarea' )
+    current_binding = ( target_type == "input" || target_type == "textarea" )
         ? text_area_bindings
         : body_bindings;
 
@@ -56,9 +55,9 @@ function key_press( e ) {
 
 function get_key( e ) {
     var key   = String.fromCharCode( e.keyCode ),
-        ctrl  = e.ctrlKey                 ? 'C-' : '',
-        meta  = ( e.metaKey || e.altKey ) ? 'M-' : '',
-        shift = e.shiftKey                ? 'S-' : '';
+        ctrl  = e.ctrlKey                 ? "C-" : "",
+        meta  = ( e.metaKey || e.altKey ) ? "M-" : "",
+        shift = e.shiftKey                ? "S-" : "";
 
     return ctrl + meta + ( shift ? key : key.toLowerCase() );
 }
