@@ -18,6 +18,8 @@ var body_bindings = {
 
 var text_area_bindings = { };
 
+// this variable will contain either an object or a function which
+// allow chromacs to determine what to do with the current keypress.
 var current_binding;
 
 // behaviour obviously affected by input type
