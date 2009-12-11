@@ -1,12 +1,21 @@
 // tell chrome to listen for a keypress
 document.addEventListener( "keydown", key_press, false );
 
+var bindings = {
+    "R": function () { location.reload() }
+};
+
 function key_press( e ) {
     var key = get_key( e );
+    var command = bindings[ key ];
 
-    console.log( e );
-    if ( e.which != 0 && e.charCode != 0 ) {
-        console.log( String.fromCharCode( e.keyCode ) );
+    if ( command ) {
+        console.log( "hit" );
+
+        command();
+
+        // nothing else, thanks
+        e.preventDefault();
     }
 }
 
@@ -18,5 +27,5 @@ function get_key( e ) {
     meta = ( e.metaKey || e.altKey ) ? 'M-' : '',
     shift = e.shiftKey               ? 'S-' : '';
 
-    return ctrl + meta + key;
+    return ctrl + meta + String.fromCharCode( e.keyCode );
 }
