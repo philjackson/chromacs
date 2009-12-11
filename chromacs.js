@@ -39,26 +39,28 @@ function key_press( e ) {
     // action we're going to take with the current binding
     var command = current_binding[ key ];
 
-    if ( command ) {
-        switch ( typeof command ) {
-        case "function":
-            // set the appropriate binding map (we could still have
-            // come from a chain)
-            current_binding = get_current_binding( target_type );
+    switch ( typeof command ) {
+    case "function":
+        command();
 
-            // run the command
-            command();
-
-            break;
-
-        case "object":
-            // set the current binding to that of the chain
-            current_binding = command;
-
-            break;
-        }
-
+        // reset any chaing we have going on
+        current_binding = null;
         e.preventDefault();
+
+        break;
+
+    case "object":
+        // set the current binding to that of the chain
+        current_binding = command;
+        e.preventDefault();
+
+        break;
+
+    default:
+        // abort
+        current_binding = null;
+
+        break;
     }
 }
 
