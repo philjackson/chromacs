@@ -18,16 +18,23 @@ var body_bindings = {
 
 var text_area_bindings = { };
 
-var current_binding, current_prefix;
+var current_binding;
+
+// behaviour obviously affected by input type
+function get_current_binding( target_type ) {
+    return ( target_type == "input"
+             || target_type == "textarea" )
+        ? text_area_bindings
+        : body_bindings;
+}
 
 function key_press( e ) {
     var key         = get_key( e ),
         target_type = e.target.tagName.toLowerCase();
 
-    // behaviour obviously affected by input type
-    current_binding = ( target_type == "input" || target_type == "textarea" )
-        ? text_area_bindings
-        : body_bindings;
+    if ( ! current_binding ) {
+        current_binding = get_current_binding( target_type );
+    }
 
     // action we're going to take with the current binding
     var command = current_binding[ key ];
@@ -35,13 +42,15 @@ function key_press( e ) {
     if ( command ) {
         switch ( typeof command ) {
         case "function":
-            // reset the key-chain
-            current_binding = body_bindings;
+            // set the appropriate binding map (we could still have
+            // come from a chain)
+            current_binding = get_current_binding( target_type );
 
-            // run the function
+            // run the command
             command();
 
             break;
+
         case "object":
             // set the current binding to that of the chain
             current_binding = command;
