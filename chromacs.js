@@ -1,30 +1,43 @@
 // tell chrome to listen for a keypress
 document.addEventListener( "keydown", key_press, false );
 
-var chromacs_bindings = {
+var body_bindings = {
+    // basic history navigation
     "r": function () { location.reload() },
     "B": function () { history.back()    },
     "F": function () { history.forward() },
+
+    // page navigation
+    "n": function () { scrollBy( 0, 30 )  },
+    "p": function () { scrollBy( 0, -30 ) },
+
     "C-x": {
         "C-f": function () { alert( "chained!" ) }
     }
 };
 
-var current_binding = chromacs_bindings;
+var text_area_bindings = { };
+
+var current_binding,
+    current_prefix  = null;
 
 function key_press( e ) {
-    var key = get_key( e ),
-    command = current_binding[ key ];
+    var key         = get_key( e ),
+        target_type = e.target.tagName.toLowerCase();
 
-    console.log( key );
+    // behaviour obviously affected by input type
+    current_binding = ( target_type == 'input' || target_type == 'textarea' )
+        ? text_area_bindings
+        : body_bindings;
+
+    // action we're going to take with the current binding
+    var command = current_binding[ key ];
 
     if ( command ) {
-        console.log( typeof command );
-
         switch ( typeof command ) {
         case "function":
             // reset the key-chain
-            current_binding = chromacs_bindings;
+            current_binding = body_bindings;
 
             // run the function
             command();
@@ -42,12 +55,10 @@ function key_press( e ) {
 }
 
 function get_key( e ) {
-    var key = key   = String.fromCharCode( e.keyCode ),
-
-    // try and make the identifiers as emacs-like as possible
-    ctrl  = e.ctrlKey                 ? 'C-' : '',
-    meta  = ( e.metaKey || e.altKey ) ? 'M-' : '',
-    shift = e.shiftKey                ? 'S-' : '';
+    var key   = String.fromCharCode( e.keyCode ),
+        ctrl  = e.ctrlKey                 ? 'C-' : '',
+        meta  = ( e.metaKey || e.altKey ) ? 'M-' : '',
+        shift = e.shiftKey                ? 'S-' : '';
 
     return ctrl + meta + ( shift ? key : key.toLowerCase() );
 }
