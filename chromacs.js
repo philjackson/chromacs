@@ -10,10 +10,6 @@ var body_bindings = {
     // page navigation
     "n": function () { scrollBy( 0, 30 )  },
     "p": function () { scrollBy( 0, -30 ) },
-
-    "C-x": {
-        "C-f": function () { alert( "chained!" ) }
-    }
 };
 
 var text_area_bindings = { };
