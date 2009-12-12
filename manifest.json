@@ -6,6 +6,7 @@
         "128": "icon128.png",
         "48" : "icon48.png"
     },
+    "background_page": "background.html",
     "content_scripts" : [{
         "js"      : [ "chromacs.js" ],
         "run_at"  : "document_start",
