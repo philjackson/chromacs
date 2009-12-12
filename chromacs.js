@@ -1,5 +1,5 @@
 // tell chrome to listen for a keypress
-document.addEventListener( "keydown", key_press, false );
+window.addEventListener( "keydown", key_press, true );
 
 var body_bindings = {
     // basic history navigation
@@ -8,6 +8,9 @@ var body_bindings = {
     "F": function () { history.forward() },
 
     // page navigation
+    "C-n": function () { scrollBy( 0, 30 )  },
+    "C-p": function () { scrollBy( 0, -30 ) },
+
     "n": function () { scrollBy( 0, 30 )  },
     "p": function () { scrollBy( 0, -30 ) },
 };
