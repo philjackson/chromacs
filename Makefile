@@ -13,8 +13,5 @@ $(NAME): manifest.json chromacs.js
 clean:
 	rm -f $(NAME)
 
-tag:
+tag: $(NAME)
 	git tag "$(VERSION)"
-
-# build-name: chromacs.crx
-# 	cp chromacs.crx builds/chromacs-$(VERSION).crx
