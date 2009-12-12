@@ -7,8 +7,8 @@ $(NAME): manifest.json chromacs.js
 	crxmake --pack-extension-key=${HOME}/etc/chromacs.pem \
 		--extension-output=$(NAME) \
 		--pack-extension=. \
-		--ignore-dir="(bin|builds)" \
-		--ignore-file=Makefile
+		--ignore-dir="(bin|builds|.git)" \
+		--ignore-file="(Makefile|.gitignore)"
 
 clean:
 	rm -f $(NAME)
