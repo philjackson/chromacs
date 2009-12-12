@@ -13,6 +13,31 @@ var body_bindings = {
 
     "n": function () { scrollBy( 0, 30 )  },
     "p": function () { scrollBy( 0, -30 ) },
+
+    "M-n": function () {
+        chrome.extension.connect().postMessage({
+            action: "next_tab"
+        });
+    },
+    "M-p": function () {
+        chrome.extension.connect().postMessage({
+            action: "previous_tab",
+        });
+    },
+    "C-x": {
+        "k": function () {
+            chrome.extension.connect().postMessage({
+                action: "close_tab",
+            });
+        },
+        "C-f": function () {
+            chrome.extension.connect().postMessage({
+                action: "open_url",
+                newtab: true,
+                url: "about:blank"
+            });
+        }
+    }
 };
 
 var text_area_bindings = { };
@@ -32,6 +57,8 @@ function get_current_binding( target_type ) {
 function key_press( e ) {
     var key         = get_key( e ),
         target_type = e.target.tagName.toLowerCase();
+
+    console.log( key );
 
     if ( ! current_binding ) {
         current_binding = get_current_binding( target_type );
